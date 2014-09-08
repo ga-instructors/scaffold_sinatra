@@ -1,0 +1,24 @@
+source 'https://rubygems.org'
+
+ruby "2.1.0"
+
+# Gems used in every environment
+gem 'sinatra', '1.4.5'
+
+# gems specific to the development environment
+group :development do
+  gem 'shotgun', '0.9'
+end
+
+# gems specifically for testing
+group :test do
+end
+
+# gems used in the local development and testing environments
+group :development, :test do
+  gem 'pry', '0.10.1'
+end
+
+# gems specific to the production environment
+group :production do
+end
