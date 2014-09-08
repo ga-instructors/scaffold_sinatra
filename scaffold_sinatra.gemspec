@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = ScaffoldSinatra::VERSION
   spec.authors       = ["h4w5"]
   spec.email         = ["philip@h4w5.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Helps scaffold a simple Sinatra app according to the WDI conventions.}
+  spec.description   = %q{Helps scaffold a simple Sinatra app according to the WDI conventions.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
