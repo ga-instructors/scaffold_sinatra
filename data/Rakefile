@@ -1,0 +1,6 @@
+desc "start Sinatra server with `shotgun` command on port 3000."
+task :start do
+  `bundle exec shotgun -p 3000`
+end
+
+task :default => 'start'
