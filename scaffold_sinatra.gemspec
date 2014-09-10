@@ -6,11 +6,11 @@ require 'scaffold_sinatra/version'
 Gem::Specification.new do |spec|
   spec.name          = "scaffold_sinatra"
   spec.version       = ScaffoldSinatra::VERSION
-  spec.authors       = ["h4w5"]
+  spec.authors       = ["h4w5","phlco"]
   spec.email         = ["philip@h4w5.com"]
   spec.summary       = %q{Helps scaffold a simple Sinatra app according to the WDI conventions.}
-  spec.description   = %q{Helps scaffold a simple Sinatra app according to the WDI conventions.}
-  spec.homepage      = ""
+  spec.description   = %q{Helps scaffold a simple Sinatra app according to the WDI conventions...}
+  spec.homepage      = "https://github.com/ga-instructors"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
