@@ -1,23 +1,25 @@
 #!/usr/bin/env ruby
 
 require 'fileutils'
+require 'pathname'
 require 'open-uri'
 require 'colorize'
+require 'erb'
 require 'pry'
+
+DATA_PATH = File.expand_path("../../data", __FILE__)
 
 include FileUtils
 
-cmd = ARGV[0]
-project_name = ARGV[1]
+project_name = ARGV[0]
 
-if cmd == 's' || cmd == 'server'
-  system('bundle exec shotgun -p 3000')
+# check input
+if project_name.nil?
+  puts "Can't build project without name.".red
   exit
-else
-  if Dir.exist?(project_name)
-    puts "#{project_name} already exists!".red
-    exit
-  end
+elsif Dir.exist?(project_name)
+  puts "#{project_name} already exists!".red
+  exit
 end
 
 # make app repo
@@ -26,38 +28,32 @@ mkdir(project_name)
 # and do all the work there...
 cd(project_name) do
 
-  # assets
-  makedirs(['public', 'public/images', 'public/stylesheets', 'views', 'spec'])
+  # copy data directory over
+  data_root = Pathname.new(DATA_PATH)
+  Dir.glob(File.join(DATA_PATH, "**/*")).each do |data_file_path|
+    relative_file_path = Pathname.new(data_file_path).relative_path_from(data_root)
 
-  # styles
+    # make directories as necessary
+    if File.directory?(data_file_path)
+      mkdir(relative_file_path)
+
+    # render ERB files and save output to new files
+    elsif File.extname(data_file_path) == ".erb"
+      relative_path_without_erb = relative_file_path.to_s.rpartition('.').first
+      File.open(relative_path_without_erb, 'w+') do |f|
+        f.write(ERB.new(File.read(data_file_path)).result)
+      end
+
+    # copy whole non-ERB files (no rendering)
+    else
+      cp(data_file_path, relative_file_path)
+    end
+  end
+
+  # copy files from internet
   File.open('public/stylesheets/normalize.css', 'w+') do |f|
-    # normalize_url = 'https://raw.githubusercontent.com/necolas/normalize.css/master/normalize.css'
-    # f.write(open(normalize_url).read)
-  end
-
-  # views
-  File.open('views/layout.erb', 'w+') do |f|
-    #
-  end
-
-  # Index.erb
-  File.open('views/index.erb', 'w+') do |f|
-    #
-  end
-
-  # Gemfile
-  File.open('Gemfile', 'w+') do |f|
-    #
-  end
-
-  # # default app!
-  File.open('app.rb', 'w+') do |f|
-    #
-  end
-
-  # config.ru
-  File.open('config.ru', 'w+') do |f|
-    #
+    normalize_url = 'https://raw.githubusercontent.com/necolas/normalize.css/master/normalize.css'
+    f.write(open(normalize_url).read)
   end
 
   system('bundle install')
