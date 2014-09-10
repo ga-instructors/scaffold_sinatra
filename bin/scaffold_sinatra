@@ -41,7 +41,7 @@ cd(project_name) do
     elsif File.extname(data_file_path) == ".erb"
       relative_path_without_erb = relative_file_path.to_s.rpartition('.').first
       File.open(relative_path_without_erb, 'w+') do |f|
-        f.write(ERB.new(File.read(data_file_path)).result)
+        f.write(ERB.new(File.read(data_file_path)).result(binding))
       end
 
     # copy whole non-ERB files (no rendering)
