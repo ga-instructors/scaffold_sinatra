@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'active_support/inflector'
 require 'fileutils'
 require 'pathname'
 require 'open-uri'
@@ -13,24 +14,29 @@ include FileUtils
 
 project_name = ARGV[0]
 
+# it's a naming thing
+project_snake_case = project_name.underscore
+project_camel_case = project_snake_case.camelize
+project_title_case = project_snake_case.titleize
+
 # check input
-if project_name.nil?
+if project_snake_case.nil?
   puts "Can't build project without name.".red
   exit
-elsif Dir.exist?(project_name)
-  puts "#{project_name} already exists!".red
+elsif Dir.exist?(project_snake_case)
+  puts "#{project_snake_case} already exists!".red
   exit
 end
 
 # make app repo
-mkdir(project_name)
+mkdir(project_snake_case)
 
 # and do all the work there...
-cd(project_name) do
+cd(project_snake_case) do
 
   # copy data directory over
   data_root = Pathname.new(DATA_PATH)
-  Dir.glob(File.join(DATA_PATH, "**/*")).each do |data_file_path|
+  Dir.glob(File.join(DATA_PATH, "**/{*,.*}")).each do |data_file_path|
     relative_file_path = Pathname.new(data_file_path).relative_path_from(data_root)
 
     # make directories as necessary
@@ -50,6 +56,8 @@ cd(project_name) do
     end
   end
 
+  # TODO fails when not connected to internet
+
   # copy files from internet
   File.open('public/stylesheets/normalize.css', 'w+') do |f|
     normalize_url = 'https://raw.githubusercontent.com/necolas/normalize.css/master/normalize.css'
@@ -59,6 +67,6 @@ cd(project_name) do
   system('bundle install')
 
   puts('>> OK!'.white)
-  puts(">> Created #{project_name}!".green)
+  puts(">> Created #{project_snake_case}!".green)
   puts('>> use `bundle exec shotgun -p 3000` from inside the folder to run it!')
 end

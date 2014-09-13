@@ -1,29 +1,41 @@
-class App < Sinatra::Base
+module <%= project_camel_case %>
+  class App < Sinatra::Base
 
-  ########################
-  # Configuration
-  ########################
+    ########################
+    # Configuration
+    ########################
 
-  # allow simple "logging" of server output
-  enable :logging
+    # allow simple "logging" of server output
+    enable :logging
 
-  # allow put/delete forms in browsers that don't support it
-  enable :method_override
+    # allow put/delete forms in browsers that don't support it
+    enable :method_override
 
-  # store data between HTTP requests in a cookie
-  enable :sessions
+    # store data between HTTP requests in a cookie
+    enable :sessions
 
-  # we can set the session's cookie hash ourselves, so that all of our app's
-  # instances share it: since we want to run shotgun, which creates new
-  # application instances, we must manually set session_secret
-  set :session_secret, SecureRandom.urlsafe_base64
+  <%#
+    # TODO figure out if we need to have ses_secret, and if so, whether
+      we should put it into a config development group or somewhere else...
+  %>
+    # we can set the session's cookie hash ourselves, so that all of our app's
+    # instances share it: since we want to run shotgun, which creates new
+    # application instances, we must manually set session_secret
+    set :session_secret, SecureRandom.urlsafe_base64
 
-  ########################
-  # Routes
-  ########################
-  
-  get('/') do
-    render(:erb, :index)
+    # include the use of auto-reloading when in development
+    configure :development do
+      require "sinatra/reloader"
+      register Sinatra::Reloader
+    end
+
+    ########################
+    # Routes
+    ########################
+
+    get('/') do
+      render(:erb, :index)
+    end
+
   end
-
 end

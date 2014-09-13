@@ -1,0 +1,2 @@
+# do not upload our application's secrets!
+.env
