@@ -7,13 +7,39 @@ require 'open-uri'
 require 'colorize'
 require 'erb'
 
-require 'pry'
+require 'pry' # TODO remove!
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+require 'scaffold_sinatra'
+require 'trollop'
 
 DATA_PATH = File.expand_path("../../data", __FILE__)
 
+include ScaffoldSinatra::Utils
 include FileUtils
 
+######################
+# Parse options and set environment
+######################
+
+opts = Trollop::options do
+  version("ScaffoldSinatra #{ScaffoldSinatra::VERSION}")
+  # originally used 'version', but this caused major namespace confusions...
+  opt :level, "Set scaffold level: 'basic', 'standard', or 'full'.", type: :string, default: "full"
+end
+
+self.scaffold = opts[:level]
+
+######################
+# Ensure project name
+######################
+
 project_name = ARGV[0]
+
+if project_name.nil?
+  puts "Can't build project without name.".red
+  exit
+end
 
 # it's a naming thing
 project_snake_case = project_name.underscore
@@ -21,13 +47,14 @@ project_camel_case = project_snake_case.camelize
 project_title_case = project_snake_case.titleize
 
 # check input
-if project_snake_case.nil?
-  puts "Can't build project without name.".red
-  exit
-elsif Dir.exist?(project_snake_case)
+if Dir.exist?(project_snake_case)
   puts "#{project_snake_case} already exists!".red
   exit
 end
+
+######################
+# Run scaffold
+######################
 
 # make app repo
 mkdir(project_snake_case)
