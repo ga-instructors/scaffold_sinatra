@@ -18,6 +18,8 @@ DATA_PATH = File.expand_path("../../data", __FILE__)
 include ScaffoldSinatra::Utils
 include FileUtils
 
+
+
 ######################
 # Parse options and set environment
 ######################
@@ -28,7 +30,12 @@ opts = Trollop::options do
   opt :level, "Set scaffold level: 'basic', 'standard', or 'full'.", type: :string, default: "full"
 end
 
-self.scaffold = opts[:level]
+if is_scaffold?(opts[:level])
+  self.scaffold = opts[:level]
+else
+  puts "There is no scaffold named '#{opts[:level]}.' See `scaffold_sinatra -h`.".red
+  exit
+end
 
 ######################
 # Ensure project name
@@ -66,6 +73,7 @@ cd(project_snake_case) do
   data_root = Pathname.new(DATA_PATH)
   Dir.glob(File.join(DATA_PATH, "**/{*,.*}")).each do |data_file_path|
     relative_file_path = Pathname.new(data_file_path).relative_path_from(data_root)
+    next if !include_in_scaffold?(relative_file_path)
 
     # make directories as necessary
     if File.directory?(data_file_path)
@@ -84,7 +92,7 @@ cd(project_snake_case) do
     end
   end
 
-  # TODO fails when not connected to internet
+  # FIXME fails when not connected to internet
 
   # copy files from internet
   File.open('public/stylesheets/normalize.css', 'w+') do |f|
@@ -92,7 +100,7 @@ cd(project_snake_case) do
     f.write(open(normalize_url).read)
   end
 
-  system('bundle install')
+  system('bundle install') if standard_scaffold?
 
   puts('>> OK!'.white)
   puts(">> Created #{project_snake_case}!".green)

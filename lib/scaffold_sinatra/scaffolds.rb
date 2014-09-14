@@ -4,6 +4,27 @@ module ScaffoldSinatra
     STANDARD = 2
     FULL     = 3
 
+    FILE_SCAFFOLD = {
+      "app.rb.erb"                       => "basic",
+      "config.ru.erb"                    => "basic",
+      "public"                           => "basic",
+      "public/images"                    => "basic",
+      "public/images/ga-favicon.ico"     => "basic",
+      "public/images/ga-logo-small.png"  => "basic",
+      "public/stylesheets"               => "basic",
+      "public/stylesheets/style.css.erb" => "basic",
+      "readme.md.erb"                    => "basic",
+      "views"                            => "basic",
+      "views/index.erb.erb"              => "basic",
+      "views/layout.erb.erb"             => "basic",
+      "Gemfile.erb"                      => "standard",
+      "Rakefile"                         => "standard",
+      "boot.rb"                          => "full",
+      "helpers"                          => "full",
+      ".env"                             => "full",
+      ".gitignore"                       => "full"
+    }
+
     def scaffolds
       context = ScaffoldSinatra::Scaffolds
       @@scaffolds ||= context.constants.reduce({}) do |hash, constant|

@@ -1,10 +1,10 @@
 require_relative 'scaffolds'
-require 'pry'
+
 module ScaffoldSinatra
   module Utils
     include ScaffoldSinatra::Scaffolds
 
-    def self.add_scaffolds
+    def self.add_scaffold_methods
       module_function(:scaffolds)
       scaffolds.each_key do |level_of|
         level = const_get(level_of.upcase)
@@ -12,7 +12,7 @@ module ScaffoldSinatra
       end
     end
 
-    add_scaffolds
+    add_scaffold_methods
 
     def scaffold=(scaffold)
       @value = value_of(scaffold)
@@ -20,6 +20,15 @@ module ScaffoldSinatra
 
     def scaffold
       scaffold_with_value(@value)
+    end
+
+    def is_scaffold?(scaffold)
+      !ScaffoldSinatra::Scaffolds.const_get(scaffold.upcase).nil?
+    end
+
+    def include_in_scaffold?(file_name)
+      scaffold = ScaffoldSinatra::Scaffolds::FILE_SCAFFOLD[file_name.to_s]
+      ScaffoldSinatra::Scaffolds.const_get(scaffold.upcase) <= @value
     end
   end
 end

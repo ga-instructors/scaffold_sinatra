@@ -1,5 +1,7 @@
+<% if full_scaffold? %>
 require File.expand_path('../boot', __FILE__)
 
+<% end %>
 module <%= project_camel_case %>
   class App < Sinatra::Base
 
@@ -10,6 +12,7 @@ module <%= project_camel_case %>
     # allow simple "logging" of server output
     enable :logging
 
+<% if standard_scaffold? %>
     # allow put/delete forms in browsers that don't support it
     enable :method_override
 
@@ -31,6 +34,7 @@ module <%= project_camel_case %>
       register Sinatra::Reloader
     end
 
+<% end %>
     ########################
     # Routes
     ########################

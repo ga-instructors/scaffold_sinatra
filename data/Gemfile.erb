@@ -4,7 +4,7 @@ ruby '<%= RUBY_VERSION %>'
 
 # Gems used in every environment
 gem 'sinatra', '1.4.5'
-gem 'dotenv',  '~> 0.9.0'
+<%= "gem 'dotenv',  '~> 0.9.0'" if full_scaffold? %>
 
 # gems specific to the development environment
 group :development do
