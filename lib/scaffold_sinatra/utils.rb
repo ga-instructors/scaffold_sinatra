@@ -28,7 +28,7 @@ module ScaffoldSinatra
 
     def include_in_scaffold?(file_name)
       scaffold = ScaffoldSinatra::Scaffolds::FILE_SCAFFOLD[file_name.to_s]
-      ScaffoldSinatra::Scaffolds.const_get(scaffold.upcase) <= @value
+      ScaffoldSinatra::Scaffolds.const_get(scaffold.upcase) <= @value unless scaffold.nil?
     end
   end
 end

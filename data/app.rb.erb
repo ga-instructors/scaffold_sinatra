@@ -1,6 +1,9 @@
 <% if full_scaffold? %>
 require File.expand_path('../boot', __FILE__)
 
+<% elsif !standard_scaffold? %>
+require 'sinatra/base'
+
 <% end %>
 module <%= project_camel_case %>
   class App < Sinatra::Base
