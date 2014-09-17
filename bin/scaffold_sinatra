@@ -18,8 +18,6 @@ DATA_PATH = File.expand_path("../../data", __FILE__)
 include ScaffoldSinatra::Utils
 include FileUtils
 
-
-
 ######################
 # Parse options and set environment
 ######################
