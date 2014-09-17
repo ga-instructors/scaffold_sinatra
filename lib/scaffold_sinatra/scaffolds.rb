@@ -10,7 +10,7 @@ module ScaffoldSinatra
       "public"                           => "basic",
       "public/images"                    => "basic",
       "public/images/ga-favicon.ico"     => "basic",
-      "public/images/ga-logo-small.png"  => "basic", # FIXME not working... can't put images in a gem?
+      "public/images/ga-logo-small.png"  => "basic",
       "public/stylesheets"               => "basic",
       "public/stylesheets/style.css.erb" => "basic",
       "readme.md.erb"                    => "basic",
