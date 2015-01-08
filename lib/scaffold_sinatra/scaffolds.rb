@@ -10,7 +10,7 @@ module ScaffoldSinatra
       "config.ru.erb"                    => "basic",
       "public"                           => "basic",
       "public/images"                    => "basic",
-      # "public/images/ga-favicon.ico"     => "basic",
+      "public/images/ga-favicon.ico"     => "basic",
       "favicon.ico"                      => "basic",
       "public/images/ga-logo-small.png"  => "basic",
       "public/stylesheets"               => "basic",
