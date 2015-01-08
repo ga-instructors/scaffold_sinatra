@@ -4,6 +4,10 @@ require 'bundler'
 
 Bundler.require(:default, ENV['RACK_ENV'])
 
+<% else %>
+require 'sinatra/base'
 <% end %>
-require './app'
-run <%= project_camel_case %>::App
+
+require_relative 'server'
+
+run <%= project_camel_case %>::Server

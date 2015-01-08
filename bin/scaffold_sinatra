@@ -102,5 +102,6 @@ cd(project_snake_case) do
 
   puts('>> OK!'.white)
   puts(">> Created #{project_snake_case}!".green)
-  puts('>> use `bundle exec shotgun -p 3000` from inside the folder to run it!')
+  puts('>> Use `bundle exec rackup -p 3000` or `bundle exec shotgun -p 3000`' + \
+       '>> from inside the application\'s directory to run it!')
 end

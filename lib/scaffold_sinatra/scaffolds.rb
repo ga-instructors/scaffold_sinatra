@@ -1,22 +1,24 @@
 module ScaffoldSinatra
   module Scaffolds
     BASIC    = 1
-    STANDARD = 2
-    FULL     = 3
+    JUNIOR   = 2
+    STANDARD = 3
+    FULL     = 4
 
     FILE_SCAFFOLD = {
-      "app.rb.erb"                       => "basic",
+      "server.rb.erb"                    => "basic",
       "config.ru.erb"                    => "basic",
       "public"                           => "basic",
       "public/images"                    => "basic",
-      "public/images/ga-favicon.ico"     => "basic",
+      # "public/images/ga-favicon.ico"     => "basic",
+      "favicon.ico"                      => "basic",
       "public/images/ga-logo-small.png"  => "basic",
       "public/stylesheets"               => "basic",
       "public/stylesheets/style.css.erb" => "basic",
       "readme.md.erb"                    => "basic",
       "views"                            => "basic",
       "views/index.erb.erb"              => "basic",
-      "views/layout.erb.erb"             => "basic",
+      "views/default.erb.erb"            => "basic",
       "Gemfile.erb"                      => "standard",
       "Rakefile"                         => "standard",
       "boot.rb"                          => "full",
