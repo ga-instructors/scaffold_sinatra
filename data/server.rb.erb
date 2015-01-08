@@ -40,7 +40,7 @@ module <%= project_camel_case %>
     ########################
 
     get('/') do
-      render(:erb, :index)
+      render(:erb, :index, :layout => :default)
     end
 
   end
